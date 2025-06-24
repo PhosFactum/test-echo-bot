@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,19 +26,6 @@ jobs:
       - name: Run tests
         run: pytest --maxfail=1 --disable-warnings -q
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/telegram-echo-bot:latest
-
-      - name: Deployment notice
-        run: echo "Образ задеплоен и доступен как ${{ secrets.DOCKERHUB_USERNAME }}/telegram-echo-bot:latest"
+      - name: Build Docker image
+        run: docker build -t telegram-echo-bot:latest .
 
