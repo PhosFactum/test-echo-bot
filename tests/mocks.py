@@ -3,23 +3,22 @@ from telegram import Update, Message, User
 from telegram.ext import CallbackContext
 
 def make_update(text: str) -> Update:
-    update = MagicMock(spec=Update)
-    message = MagicMock(spec=Message)
-    message.text = text
-    update.message = message
-    update.effective_user = make_user()
-    return update
+    u = MagicMock(spec=Update)
+    m = MagicMock(spec=Message)
+    m.text = text
+    u.message = m
+    u.effective_user = make_user()
+    return u
 
 def make_user() -> User:
-    user = MagicMock(spec=User)
-    user.id = 123456
-    user.first_name = "Test"
-    user.is_bot = False
-    return user
+    u = MagicMock(spec=User)
+    u.id = 123456
+    u.first_name = "Test"
+    u.is_bot = False
+    return u
 
 def make_context(args=None) -> CallbackContext:
-    context = MagicMock(spec=CallbackContext)
-    context.args = args or []
-    context.bot = MagicMock()
-    return context
-
+    ctx = MagicMock(spec=CallbackContext)
+    ctx.args = args or []
+    ctx.bot = MagicMock()
+    return ctx
