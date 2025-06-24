@@ -1,0 +1,9 @@
+services:
+  echo-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-echo-bot
+    env_file:
+      - .env
+    restart: unless-stopped
